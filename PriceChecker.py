@@ -50,7 +50,7 @@ if best_buy in URL:
         server.starttls()
         server.ehlo()
         
-        server.login('m.utkarsh10@gmail.com', 'irovowxoxjxtkaun')
+        server.login('m.utkarsh10@gmail.com', '#confidential -- enter your password')
 
         subject = "The Moment You've been waiting for: The Price Has Decreased!"
         body = 'Hey!\n The Price of ' + bb_title + " has finally decreased!\n\n Click the link: " + URL + " to claim your deal now!"
@@ -95,7 +95,7 @@ elif amazon in URL:
         server.starttls()
         server.ehlo()
         
-        server.login('m.utkarsh10@gmail.com', 'irovowxoxjxtkaun')
+        server.login('m.utkarsh10@gmail.com', '#confidential -- enter your password')
 
         subject = "The Moment You've been waiting for: The Price Has Decreased!"
         body = 'Hey!\n The Price of ' + amazon_title + " has finally decreased!\n\n Click the link: " + URL + " to claim your deal now!"
@@ -147,7 +147,7 @@ elif canada_computers in URL:
         server.starttls()
         server.ehlo()
         
-        server.login('m.utkarsh10@gmail.com', 'irovowxoxjxtkaun')
+        server.login('m.utkarsh10@gmail.com', '#confidential -- enter your password')
 
         subject = "The Moment You've been waiting for: The Price Has Decreased!"
         body = 'Hey!\n The Price of ' + cc_title + " has finally decreased!\n\n Click the link: " + URL + " to claim your deal now!"
