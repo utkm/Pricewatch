@@ -13,4 +13,4 @@ How it Works:
 3. You will be sent an email when the price of the given product decreases
 4. If the price doesn't decrease, not to worry! Using the time module, the code will run every 24 hours.
 
-* as of now, I've made the script compatible with Best Buy, Canada Computers and Amazon.
+* as of now, I've made the script compatible with Best Buy, Canada Computers and Amazon but I hope to make it compatible with Newegg soon!
