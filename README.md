@@ -17,3 +17,6 @@ Next Steps:
 This program currently runs on the command line however in the future I'd love to utilise a web framework such as Django or Flask to have a functioning UI that users can interact with.
 
 ** as of now, I've made the script compatible with Best Buy, Canada Computers and Amazon but I hope to make it compatible with Newegg soon!
+
+**Next Steps**
+Develop a front end using Tkinter
