@@ -8,7 +8,7 @@ best_buy = "https://www.bestbuy.ca/en-ca/"
 amazon = "https://www.amazon.ca/"
 canada_computers = "https://www.canadacomputers.com/product_info.php?cPath="
 
-URL = input('Please enter a URL from either Best Buy Canada or Amazon Canada: ') 
+URL = input('Please enter a URL from either Best Buy Canada, Canada Computers or Amazon Canada: ') 
 user_email = input('Please enter your email that you would like to be contacted at: ')
 
 headers = {
@@ -50,7 +50,9 @@ if best_buy in URL:
         server.starttls()
         server.ehlo()
         
-        server.login('m.utkarsh10@gmail.com', '#confidential -- enter your password')
+        server.login('m.utkarsh10@gmail.com', 'GOOGLE APP PASSWORD')
+        # you can create a google app password by going to Google Account > Security > App Password
+
 
         subject = "The Moment You've been waiting for: The Price Has Decreased!"
         body = 'Hey!\n The Price of ' + bb_title + " has finally decreased!\n\n Click the link: " + URL + " to claim your deal now!"
@@ -95,7 +97,9 @@ elif amazon in URL:
         server.starttls()
         server.ehlo()
         
-        server.login('m.utkarsh10@gmail.com', '#confidential -- enter your password')
+        server.login('m.utkarsh10@gmail.com', 'GOOGLE APP PASSWORD')
+        # you can create a google app password by going to Google Account > Security > App Password
+
 
         subject = "The Moment You've been waiting for: The Price Has Decreased!"
         body = 'Hey!\n The Price of ' + amazon_title + " has finally decreased!\n\n Click the link: " + URL + " to claim your deal now!"
@@ -147,7 +151,8 @@ elif canada_computers in URL:
         server.starttls()
         server.ehlo()
         
-        server.login('m.utkarsh10@gmail.com', '#confidential -- enter your password')
+        server.login('m.utkarsh10@gmail.com', 'GOOGLE APP PASSWORD')
+        # you can create a google app password by going to Google Account > Security > App Password
 
         subject = "The Moment You've been waiting for: The Price Has Decreased!"
         body = 'Hey!\n The Price of ' + cc_title + " has finally decreased!\n\n Click the link: " + URL + " to claim your deal now!"
@@ -176,3 +181,5 @@ if best_buy in URL or amazon in URL or canada_computers in URL:
     while True:
         check_price()
         sleep(86400)
+        #this runs the program every day. This means the price is checked every 24-hours
+        #this way, a single deal will not be missed
