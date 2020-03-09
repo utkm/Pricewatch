@@ -12,11 +12,13 @@ How it Works:
 2. Enter an email that you wish to be contacted at 
 3. You will be sent an email when the price of the given product decreases
 4. If the price doesn't decrease, not to worry! Using the sleep function from the time module, the code will run every 24 hours.
+___
 
 ***Next Steps:***
 - Amazon has initiated a firewall to protect from bots, so I hope to implement the Amazon API to increase reliability
 - This program currently runs on the command line however in the future I'd love to build a front end using Tkinter
 - As of now, I've made the script compatible with Best Buy, Canada Computers and Amazon but I hope to make it compatible with Newegg soon!
 
-This project was presented in my International Baccalaureate 'Personal Project'. If you're interested here's the link to my presentation
-http://bit.ly/Pricewatch
+This project was presented in my International Baccalaureate 'Personal Project'. If you're interested here's the [link](http://bit.ly/Pricewatch) to my presentation
+
+Thanks!
