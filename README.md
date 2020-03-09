@@ -1,7 +1,7 @@
 # PriceChecker
 Using Python, I created a script that tracks the prices of a certain product and sends you an email once it drops!
 
-Over the past few months, I've spent HOURS searching for computer parts to build my PC. 
+Over the past few months, I've spent *hours* searching for computer parts to build my PC. 
 Everytime I find a high-quality product, I find myself spending hours glued to the computer, refreshing the site, waiting for a sale.
 
 So, I created a Python script that scrapes the data off compatible* websites using a Python Module called BeautifulSoup.
