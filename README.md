@@ -1,4 +1,7 @@
 # PriceChecker
+
+![Pricewatch Logo](/logo.png)
+
 Using Python, I created a script that tracks the prices of a certain product and sends you an email once it drops!
 
 Over the past few months, I've spent *hours* searching for computer parts to build my PC. 
