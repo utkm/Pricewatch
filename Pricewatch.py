@@ -1,7 +1,8 @@
-import requests
-import smtplib
+from requests import get
+from smtplib import SMTP
+from re import fullmatch
+from sys import exit
 from time import sleep
-from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup
 
 best_buy = "https://www.bestbuy.ca/en-ca/"
@@ -16,16 +17,16 @@ headers = {
 }
 
 if best_buy in URL:
-    def check_price():
-        page = requests.get(URL, headers=headers)
+    def bb_check_price():
+        page = get(URL, headers=headers)
         page_soup = BeautifulSoup(page.content, "html.parser")
 
         global bb_title
-        bb_title = page_soup.find("div",{"class":"x-product-detail-page"})
+        bb_title = page_soup.find("div", {"class": "x-product-detail-page"})
         bb_title = bb_title.h1.text
 
         try:
-            bb_price = page_soup.find("div",{"class":"price_FHDfG large_3aP7Z"}).get_text()
+            bb_price = page_soup.find("div", {"class": "price_FHDfG large_3aP7Z"}).get_text()
             if len(bb_price) == 6:
                 bb_price = float(bb_price[1:4])
             # turns $28999 to 289
@@ -35,7 +36,6 @@ if best_buy in URL:
                 bb_price = float(bb_price[1:3])
 
             sale_price = bb_price
-
             if sale_price < bb_price:
                 send_mail()
             else:
@@ -43,40 +43,35 @@ if best_buy in URL:
 
         except AttributeError:
             print("Hmmm. Try to re-enter the URL of a product that is not already on sale.")
+        except NameError:
+            print("Hmmm. Try to re-enter the URL of a product that is not already on sale.")
         
     def send_mail():
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server = SMTP('smtp.gmail.com', 587)
         server.ehlo()
         server.starttls()
         server.ehlo()
-        
-        server.login('m.utkarsh10@gmail.com', 'GOOGLE APP PASSWORD')
-        # you can create a google app password by going to Google Account > Security > App Password
-
+        server.login('pricewatch.pp@gmail.com', '# enter app password')
 
         subject = "The Moment You've been waiting for: The Price Has Decreased!"
-        body = 'Hey!\n The Price of ' + bb_title + " has finally decreased!\n\n Click the link: " + URL + " to claim your deal now!"
+        body = 'Hey!\nThe Price of ' + bb_title + " has finally decreased!\n\nClick the link: "\
+               + URL + " to claim your deal now!"
 
         msg = f"Subject: {subject}\n\n{body}"
-        
-        server.sendmail(
-            'm.utkarsh10@gmail.com',
-            user_email,
-            msg
-        )
 
+        server.sendmail('pricewatch.pp@gmail.com', user_email, msg)
         print("Email has been sent")
         server.quit()
 
 elif amazon in URL:
-    def check_price():
-        page = requests.get(URL, headers=headers)
+    def az_check_price():
+        page = get(URL, headers=headers)
         page_soup = BeautifulSoup(page.content, "html.parser")
-
+        # print(page_soup)
         global amazon_title
         amazon_title = page_soup.find(id="productTitle").get_text().strip()
         
-        price = page_soup.find(id="priceblock_ourprice").get_text()
+        price = page_soup.find(id="priceblock_ourprice").get_text().strip()
         if len(price) == 10:
             price = int(price[5:7]) + float(price[7:10])
         elif len(price) == 9:
@@ -86,46 +81,39 @@ elif amazon in URL:
             price = float(price)
         
         sale_price = price
-        if sale_price < price:
+        if sale_price <= price:
             send_mail()
         else:
             print("Thank you for using our service. We'll get back to you shortly!")
 
     def send_mail():
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server = SMTP('smtp.gmail.com', 587)
         server.ehlo()
         server.starttls()
         server.ehlo()
-        
-        server.login('m.utkarsh10@gmail.com', 'GOOGLE APP PASSWORD')
-        # you can create a google app password by going to Google Account > Security > App Password
 
+        server.login('pricewatch.pp@gmail.com', '# enter app password')
 
         subject = "The Moment You've been waiting for: The Price Has Decreased!"
-        body = 'Hey!\n The Price of ' + amazon_title + " has finally decreased!\n\n Click the link: " + URL + " to claim your deal now!"
+        body = 'Hey!\nThe Price of ' + amazon_title + " has finally decreased!\n\nClick the link: "\
+               + URL + " to claim your deal now!"
 
         msg = f"Subject: {subject}\n\n{body}"
-            
-        server.sendmail(
-            'm.utkarsh10@gmail.com',
-            user_email,
-            msg
-        )
 
+        server.sendmail('pricewatch.pp@gmail.com', user_email, msg)
         print("Email has been sent")
         server.quit()
 
 elif canada_computers in URL:
-    def check_price():
-        page = requests.get(URL, headers=headers)
+    def cc_check_price():
+        page = get(URL, headers=headers)
         page_soup = BeautifulSoup(page.content, "html.parser")
 
         global cc_title
-        cc_title = page_soup.find("h1",{"class":"h3 product-title mb-2"})
-        cc_title = cc_title.text
+        cc_title = page_soup.find("h1", {"class": "h3 product-title mb-2"}).get_text().strip()
 
         try:
-            cc_price = page_soup.find("div",{"class":"col-auto col-md-12 order-2 order-md-1"}).get_text().strip()
+            cc_price = page_soup.find("div", {"class": "col-auto col-md-12 order-2 order-md-1"}).get_text().strip()
             if len(cc_price) == 7:
                 cc_price = float(cc_price[1:7])
             # turns $139.99 to 139.99
@@ -137,34 +125,29 @@ elif canada_computers in URL:
                 cc_price = float(cc_price[1:5])
                 # $9.99
             sale_price = cc_price
-            if sale_price < cc_price:
+            if sale_price <= cc_price:
                 send_mail()
             else:
                 print("Thank you for using our service. We'll get back to you shortly!")
 
         except AttributeError:
             print("Hmmm. Try to re-enter the URL of a product that is not already on sale.")
-        
+
     def send_mail():
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server = SMTP('smtp.gmail.com', 587)
         server.ehlo()
         server.starttls()
         server.ehlo()
         
-        server.login('m.utkarsh10@gmail.com', 'GOOGLE APP PASSWORD')
-        # you can create a google app password by going to Google Account > Security > App Password
+        server.login('pricewatch.pp@gmail.com', '# enter app password')
 
         subject = "The Moment You've been waiting for: The Price Has Decreased!"
-        body = 'Hey!\n The Price of ' + cc_title + " has finally decreased!\n\n Click the link: " + URL + " to claim your deal now!"
+        body = 'Hey!\nThe Price of ' + cc_title + " has finally decreased!\n\nClick the link: "\
+               + URL + " to claim your deal now!"
 
         msg = f"Subject: {subject}\n\n{body}"
-        
-        server.sendmail(
-            'm.utkarsh10@gmail.com',
-            user_email,
-            msg
-        )
 
+        server.sendmail('pricewatch.pp@gmail.com', user_email, msg)
         print("Email has been sent")
         server.quit()
 
