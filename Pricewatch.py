@@ -16,7 +16,8 @@ if not fullmatch('\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?', user_email):
     exit('You have entered an INVALID email')
     
 headers = {
-    'User_Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'
+    'User_Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                  'Chrome/75.0.3770.100 Safari/537.36'
 }
 
 if best_buy in URL:
