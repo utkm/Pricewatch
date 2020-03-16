@@ -155,14 +155,21 @@ elif canada_computers in URL:
 ######################################################################################################
 ######################################################################################################
 
-elif best_buy or amazon or canada_computers not in URL:
-    print("Something's not working... Try to re-enter a link from either Best Buy Canada, Amazon Canada or Canada Computers")
-    while True:
+elif best_buy not in URL or amazon not in URL or canada_computers not in URL:
+    print("Something's not working... Try to re-enter a link from either Best Buy Canada,"
+          " Amazon Canada or Canada Computers")
+    while 1:
         break
 
-if best_buy in URL or amazon in URL or canada_computers in URL:
-    while True:
-        check_price()
-        sleep(86400)
-        #this runs the program every day. This means the price is checked every 24-hours
-        #this way, a single deal will not be missed
+if best_buy in URL:
+    bb_check_price()
+    sleep(86400)
+elif amazon in URL:
+    az_check_price()
+    sleep(86400)
+else:
+    cc_check_price()
+    sleep(86400)
+
+'''this runs the program every day. This means the price is checked every 24-hours 
+and a single deal will not be missed'''
