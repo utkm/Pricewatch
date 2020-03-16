@@ -9,9 +9,12 @@ best_buy = "https://www.bestbuy.ca/en-ca/"
 amazon = "https://www.amazon.ca/"
 canada_computers = "https://www.canadacomputers.com/product_info.php?cPath="
 
-URL = input('Please enter a URL from either Best Buy Canada, Canada Computers or Amazon Canada: ') 
+URL = input('Please enter a Product URL from either Best Buy Canada, Canada Computers or Amazon Canada: ')
 user_email = input('Please enter your email that you would like to be contacted at: ')
 
+if not fullmatch('\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?', user_email):
+    exit('You have entered an INVALID email')
+    
 headers = {
     'User_Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'
 }
