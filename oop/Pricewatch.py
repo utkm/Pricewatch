@@ -1,9 +1,6 @@
-from requests import get
-from smtplib import SMTP
 from re import fullmatch
 from sys import exit
 from time import sleep
-from bs4 import BeautifulSoup
 from CanadaComp import CanadaComputers
 
 if __name__ == "__main__":
@@ -35,7 +32,6 @@ if __name__ == "__main__":
         while 1:
             cc.cc_check_price(99999)
             sleep(86400)
-        
     else:
         print("Something's not working... Try to re-enter a link from either Best Buy Canada,"
           " Amazon Canada or Canada Computers")
