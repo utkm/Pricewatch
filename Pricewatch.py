@@ -14,10 +14,12 @@ user_email = input('Please enter your email that you would like to be contacted 
 if not fullmatch('\"?([-a-zA-Z0-9.`?{}]+@\w+\.\w+)\"?', user_email):
     exit('You have entered an INVALID email!')
 
-
 headers = {
-    'User_Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                  'Chrome/75.0.3770.100 Safari/537.36'
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Max-Age': '3600',
+    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'
 }
 
 if best_buy in URL:
@@ -40,7 +42,7 @@ if best_buy in URL:
                 bb_price = float(bb_price[1:3])
 
             sale_price = bb_price
-            if sale_price < bb_price:
+            if sale_price <= bb_price:
                 send_mail()
             else:
                 print("Thank you for using our service. We'll get back to you shortly!")
@@ -55,7 +57,7 @@ if best_buy in URL:
         server.ehlo()
         server.starttls()
         server.ehlo()
-        server.login('pricewatch.pp@gmail.com', '# enter app password')
+        server.login('m.utkarsh10@gmail.com', '')
 
         subject = "The Moment You've been waiting for: The Price Has Decreased!"
         body = 'Hey!\nThe Price of ' + bb_title + " has finally decreased!\n\nClick the link: "\
@@ -63,7 +65,7 @@ if best_buy in URL:
 
         msg = f"Subject: {subject}\n\n{body}"
 
-        server.sendmail('pricewatch.pp@gmail.com', user_email, msg)
+        server.sendmail('m.utkarsh10@gmail.com', user_email, msg)
         print("Email has been sent")
         server.quit()
 
@@ -71,7 +73,7 @@ elif amazon in URL:
     def az_check_price():
         page = get(URL, headers=headers)
         page_soup = BeautifulSoup(page.content, "html.parser")
-        # print(page_soup)
+        print(page_soup)
         global amazon_title
         amazon_title = page_soup.find(id="productTitle").get_text().strip()
         
@@ -96,7 +98,7 @@ elif amazon in URL:
         server.starttls()
         server.ehlo()
 
-        server.login('pricewatch.pp@gmail.com', '# enter app password')
+        server.login('m.utkarsh10@gmail.com', '# enter app password')
 
         subject = "The Moment You've been waiting for: The Price Has Decreased!"
         body = 'Hey!\nThe Price of ' + amazon_title + " has finally decreased!\n\nClick the link: "\
@@ -104,7 +106,7 @@ elif amazon in URL:
 
         msg = f"Subject: {subject}\n\n{body}"
 
-        server.sendmail('pricewatch.pp@gmail.com', user_email, msg)
+        server.sendmail('m.utkarsh10@gmail.com', user_email, msg)
         print("Email has been sent")
         server.quit()
 
@@ -112,28 +114,27 @@ elif canada_computers in URL:
     def cc_check_price():
         page = get(URL, headers=headers)
         page_soup = BeautifulSoup(page.content, "html.parser")
-
         global cc_title
-        cc_title = page_soup.find("h1", {"class": "h3 product-title mb-2"}).get_text().strip()
-
+        cc_title = page_soup.find("meta", attrs={"property": "og:title"})["content"]
         try:
-            cc_price = page_soup.find("div", {"class": "col-auto col-md-12 order-2 order-md-1"}).get_text().strip()
+            cc_price = page_soup.find("meta", attrs={"name": "price"})["content"]
+            # turns $1,699.00 to 1699.0
             if len(cc_price) == 7:
                 cc_price = float(cc_price[1:7])
-            # turns $139.99 to 139.99
             elif len(cc_price) == 9:
-                cc_price = int(cc_price[1]) + float(cc_price[3:9])
+                cc_price = float(cc_price[1])*1000.0 + float(cc_price[3:9])
             elif len(cc_price) == 6:
                 cc_price = float(cc_price[1:6])
+            # $9.99
             elif len(cc_price) == 5:
                 cc_price = float(cc_price[1:5])
-                # $9.99
+            
             sale_price = cc_price
+
             if sale_price <= cc_price:
                 send_mail()
             else:
                 print("Thank you for using our service. We'll get back to you shortly!")
-
         except AttributeError:
             print("Hmmm. Try to re-enter the URL of a product that is not already on sale.")
 
@@ -143,7 +144,7 @@ elif canada_computers in URL:
         server.starttls()
         server.ehlo()
         
-        server.login('pricewatch.pp@gmail.com', '# enter app password')
+        server.login('m.utkarsh10@gmail.com', '')
 
         subject = "The Moment You've been waiting for: The Price Has Decreased!"
         body = 'Hey!\nThe Price of ' + cc_title + " has finally decreased!\n\nClick the link: "\
@@ -151,7 +152,7 @@ elif canada_computers in URL:
 
         msg = f"Subject: {subject}\n\n{body}"
 
-        server.sendmail('pricewatch.pp@gmail.com', user_email, msg)
+        server.sendmail('m.utkarsh10@gmail.com', user_email, msg)
         print("Email has been sent")
         server.quit()
 
@@ -162,8 +163,6 @@ elif canada_computers in URL:
 elif best_buy not in URL or amazon not in URL or canada_computers not in URL:
     print("Something's not working... Try to re-enter a link from either Best Buy Canada,"
           " Amazon Canada or Canada Computers")
-    while 1:
-        break
 
 if best_buy in URL:
     bb_check_price()
