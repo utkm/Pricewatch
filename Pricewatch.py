@@ -22,12 +22,29 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'
 }
 
+def send_mail(email_addr, product_title, product_price, product_URL):
+    server = SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.ehlo()
+    server.login('m.utkarsh10@gmail.com', 'fiwjlmehyuoobvvc')
+
+    subject = "The Moment You've been waiting for: The Price Has Decreased!"
+    body = 'Hey!\nThe Price of ' + product_title + " has finally decreased to $" + str(product_price)+ "!\n\nClick the link: "\
+            + product_URL + " to claim your deal now!"
+
+    msg = f"Subject: {subject}\n\n{body}"
+
+    server.sendmail('m.utkarsh10@gmail.com', user_email, msg)
+    print("Email has been sent")
+    server.quit()
+    exit()
+
 if best_buy in URL:
     def bb_check_price():
         page = get(URL, headers=headers)
         page_soup = BeautifulSoup(page.content, "html.parser")
 
-        global bb_title
         bb_title = page_soup.find("div", {"class": "x-product-detail-page"})
         bb_title = bb_title.h1.text
 
@@ -43,7 +60,7 @@ if best_buy in URL:
 
             sale_price = bb_price
             if sale_price <= bb_price:
-                send_mail()
+                send_mail(user_email, bb_title, bb_price, URL)
             else:
                 print("Thank you for using our service. We'll get back to you shortly!")
 
@@ -52,70 +69,35 @@ if best_buy in URL:
         except NameError:
             print("Hmmm. Try to re-enter the URL of a product that is not already on sale.")
         
-    def send_mail():
-        server = SMTP('smtp.gmail.com', 587)
-        server.ehlo()
-        server.starttls()
-        server.ehlo()
-        server.login('m.utkarsh10@gmail.com', '')
-
-        subject = "The Moment You've been waiting for: The Price Has Decreased!"
-        body = 'Hey!\nThe Price of ' + bb_title + " has finally decreased!\n\nClick the link: "\
-               + URL + " to claim your deal now!"
-
-        msg = f"Subject: {subject}\n\n{body}"
-
-        server.sendmail('m.utkarsh10@gmail.com', user_email, msg)
-        print("Email has been sent")
-        server.quit()
 
 elif amazon in URL:
     def az_check_price():
         page = get(URL, headers=headers)
         page_soup = BeautifulSoup(page.content, "html.parser")
-        print(page_soup)
-        global amazon_title
         amazon_title = page_soup.find(id="productTitle").get_text().strip()
         
-        price = page_soup.find(id="priceblock_ourprice").get_text().strip()
-        if len(price) == 10:
-            price = int(price[5:7]) + float(price[7:10])
-        elif len(price) == 9:
-            price = int(price[5:6]) + float(price[6:9])
-        elif len(price) == 13:
-            price = price[5] + price[7:10] + price[10:13]
-            price = float(price)
+        amazon_price = page_soup.find(id="priceblock_ourprice").get_text().strip()
+        if len(amazon_price) == 10:
+            amazon_price = int(amazon_price[5:7]) + float(amazon_price[7:10])
+        elif len(amazon_price) == 9:
+            amazon_price = int(amazon_price[5:6]) + float(amazon_price[6:9])
+        elif len(amazon_price) == 13:
+            amazon_price = amazon_price[5] + amazon_price[7:10] + amazon_price[10:13]
+            amazon_price = float(amazon_price)
         
-        sale_price = price
-        if sale_price <= price:
-            send_mail()
+        sale_price = amazon_price
+        if sale_price <= amazon_price:
+            send_mail(user_email, amazon_title, amazon_price, URL)
         else:
             print("Thank you for using our service. We'll get back to you shortly!")
 
-    def send_mail():
-        server = SMTP('smtp.gmail.com', 587)
-        server.ehlo()
-        server.starttls()
-        server.ehlo()
-
-        server.login('m.utkarsh10@gmail.com', '# enter app password')
-
-        subject = "The Moment You've been waiting for: The Price Has Decreased!"
-        body = 'Hey!\nThe Price of ' + amazon_title + " has finally decreased!\n\nClick the link: "\
-               + URL + " to claim your deal now!"
-
-        msg = f"Subject: {subject}\n\n{body}"
-
-        server.sendmail('m.utkarsh10@gmail.com', user_email, msg)
-        print("Email has been sent")
-        server.quit()
 
 elif canada_computers in URL:
     def cc_check_price():
         page = get(URL, headers=headers)
         page_soup = BeautifulSoup(page.content, "html.parser")
-        global cc_title
         cc_title = page_soup.find("meta", attrs={"property": "og:title"})["content"]
+
         try:
             cc_price = page_soup.find("meta", attrs={"name": "price"})["content"]
             # turns $1,699.00 to 1699.0
@@ -132,29 +114,12 @@ elif canada_computers in URL:
             sale_price = cc_price
 
             if sale_price <= cc_price:
-                send_mail()
+                send_mail(user_email, cc_title, sale_price, URL)
             else:
                 print("Thank you for using our service. We'll get back to you shortly!")
         except AttributeError:
             print("Hmmm. Try to re-enter the URL of a product that is not already on sale.")
 
-    def send_mail():
-        server = SMTP('smtp.gmail.com', 587)
-        server.ehlo()
-        server.starttls()
-        server.ehlo()
-        
-        server.login('m.utkarsh10@gmail.com', '')
-
-        subject = "The Moment You've been waiting for: The Price Has Decreased!"
-        body = 'Hey!\nThe Price of ' + cc_title + " has finally decreased!\n\nClick the link: "\
-               + URL + " to claim your deal now!"
-
-        msg = f"Subject: {subject}\n\n{body}"
-
-        server.sendmail('m.utkarsh10@gmail.com', user_email, msg)
-        print("Email has been sent")
-        server.quit()
 
 ######################################################################################################
 ######################################################################################################
