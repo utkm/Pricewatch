@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 request.py
+tester.py
 
 # C extensions
 *.so

@@ -29,9 +29,10 @@ if __name__ == "__main__":
         pass
     elif canada_computers in URL:
         cc = CanadaComputers(URL, headers, user_email)
+        original_price = cc.cc_check_price(99999)
         while 1:
-            cc.cc_check_price(99999)
             sleep(86400)
+            cc.cc_check_price(original_price)
     else:
         print("Something's not working... Try to re-enter a link from either Best Buy Canada,"
-          " Amazon Canada or Canada Computers")
+        " Amazon Canada or Canada Computers")
