@@ -1,6 +1,12 @@
-# PriceChecker
+<h1 align="center">Pricewatch</h1>
 
-![Pricewatch Logo](/logo.png)
+<p align="center">
+  <img alt="Best Buy" src="https://img.shields.io/badge/Best%20Buy-Up-brightgreen">
+  <img alt="Canada Computers" src="https://img.shields.io/badge/Canada%20Computers-Up-brightgreen">
+  <img alt="Amazon" src="https://img.shields.io/badge/Amazon-Down-red">
+</p>
+
+<img align="left" src="/logo.png" alt="Pricewatch Logo" width="400">
 
 Using Python, I created a script that tracks the prices of a certain product and sends you an email once it drops!
 
@@ -9,7 +15,7 @@ Everytime I find a high-quality product, I find myself spending hours glued to t
 
 So, I created a Python script that scrapes the data off compatible* websites using a Python Module called BeautifulSoup.
 I also used the SMTPLIB module to be able to send any valid email a notification that the price of the product has gone down. Email validation is done using a simple RegEx (Regular Expression) and checks whether or not the email is valid.
-
+<br><br><br>
 How it Works:
 1. Enter a URL from one of the compatible websites
 2. Enter an email that you wish to be contacted at 
