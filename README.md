@@ -28,6 +28,4 @@ ___
 - This program currently runs on the command line however in the future I'd love to build a front end using Tkinter
 - As of now, I've made the script compatible with Best Buy, Canada Computers and Amazon but I hope to make it compatible with Newegg soon!
 
-This project was presented in my International Baccalaureate 'Personal Project'. If you're interested here's the [link](http://bit.ly/Pricewatch) to my presentation
-
 Thanks!
