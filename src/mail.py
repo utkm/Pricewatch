@@ -13,7 +13,7 @@ class SendMail():
         server.ehlo()
         server.starttls()
         server.ehlo()
-        server.login('m.utkarsh10@gmail.com', 'fiwjlmehyuoobvvc')
+        server.login('m.utkarsh10@gmail.com', 'enter your app password')
 
         subject = "The Moment You've Been Waiting For: The Price Has Decreased!"
         body = 'Hey!\nThe Price of ' + self.product_title + " has finally decreased to $" + str(self.product_price)+ "!\n\nClick the link: "\
